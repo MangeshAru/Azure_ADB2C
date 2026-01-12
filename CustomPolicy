@@ -11,7 +11,7 @@ Customize UI and branding.
 Implement advanced flows (MFA, refresh token revocation, social + local accounts).
 
 They are XML-based and define UserJourneys (steps for sign-in/sign-up).
-
+--------------------------------------------------------------------------------------
 They are XML-based and consist of:
 
 Base policy (TrustFrameworkBase.xml)
@@ -19,7 +19,7 @@ Extensions policy (TrustFrameworkExtensions.xml)
 Localization policy (optional)
 Relying Party (RP) policies (SignUpOrSignIn, ProfileEdit, PasswordReset)
 
-
+-----------------------------------------------------------------
 3. Key components in your XML
 
 ClaimsSchema: Defines claims like email, password, objectId.
@@ -32,7 +32,7 @@ B2C_1A_TokenEncryptionKeyContainer (encrypt refresh tokens)
 
 UserJourneys: Orchestrate steps for SignUpOrSignIn, ProfileEdit, PasswordReset, RedeemRefreshToken.
 
-
+---------------------------------------------------------------------------------------------------
 Why we need Identity Experience Framework (IEF)
 
 IEF is the policy engine inside Azure AD B2C.
@@ -40,7 +40,7 @@ It interprets and executes your XML policies.
 Without IEF, custom policies cannot run.
 Uploading policies to IEF makes them available as endpoints
 IEF uses the apps you register to securely handle token issuance.
-
+----------------------------------------------------------------------------------------------------------
  Why we need two special apps
 
 1. IdentityExperienceFramework App
@@ -69,7 +69,7 @@ Used in your XML as:
 
 client_id
 
-
+-------------------------------------------------------------------------------------------------------------
 
 
  Why these steps are required
