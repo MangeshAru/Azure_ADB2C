@@ -1,0 +1,83 @@
+Custom policies give full control over sign-in/sign-up flows, unlike built-in user flows.
+
+Why we use Custom Policies
+
+Built-in User Flows in Azure AD B2C are limited (basic sign-in/sign-up, password reset).
+Custom Policies give full control:
+
+Add custom claims.
+Integrate REST APIs for validation.
+Customize UI and branding.
+Implement advanced flows (MFA, refresh token revocation, social + local accounts).
+
+They are XML-based and define UserJourneys (steps for sign-in/sign-up).
+
+They are XML-based and consist of:
+
+Base policy (TrustFrameworkBase.xml)
+Extensions policy (TrustFrameworkExtensions.xml)
+Localization policy (optional)
+Relying Party (RP) policies (SignUpOrSignIn, ProfileEdit, PasswordReset)
+
+
+3. Key components in your XML
+
+ClaimsSchema: Defines claims like email, password, objectId.
+TechnicalProfiles: Handle sign-in, sign-up, token issuance.
+JwtIssuer: Issues tokens using keys:
+
+B2C_1A_TokenSigningKeyContainer (sign tokens)
+B2C_1A_TokenEncryptionKeyContainer (encrypt refresh tokens)
+
+
+UserJourneys: Orchestrate steps for SignUpOrSignIn, ProfileEdit, PasswordReset, RedeemRefreshToken.
+
+
+Why we need Identity Experience Framework (IEF)
+
+IEF is the policy engine inside Azure AD B2C.
+It interprets and executes your XML policies.
+Without IEF, custom policies cannot run.
+Uploading policies to IEF makes them available as endpoints
+IEF uses the apps you register to securely handle token issuance.
+
+ Why we need two special apps
+
+1. IdentityExperienceFramework App
+
+Acts as the resource API for the policy engine.
+Exposes the user_impersonation scope.
+Used in your XML as:
+
+IdTokenAudience
+resource_id
+
+
+Ensures tokens are issued for the correct resource.
+
+2. ProxyIdentityExperienceFramework App
+
+Acts as the public client that requests tokens on behalf of the user.
+Allows ROPC (Resource Owner Password Credentials) flow internally for local accounts.
+Must have:
+
+Allow public client flows = Yes
+API permission to IdentityExperienceFramework → user_impersonation
+Admin consent granted
+
+Used in your XML as:
+
+client_id
+
+
+
+
+ Why these steps are required
+
+Base, Extensions, Localization policies define the building blocks.
+Relying Party (RP) policies expose the actual login endpoints.
+Apps + keys + policies together enable:
+
+Secure token issuance.
+Custom orchestration (sign-up, sign-in, password reset).
+Integration with your app via OAuth/OpenID Connect.
