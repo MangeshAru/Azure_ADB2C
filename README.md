@@ -36,8 +36,23 @@ Front-end apps request tokens via OpenID Connect/OAuth2 endpoints.
 API apps validate these tokens to authorize requests.
 
 
+
+
 Implement user journeys:
 
 B2C orchestrates steps like credentials collection, validation, directory writes, token issuance, logout handling.
 Tokens include claims your app can rely on (e.g., email, name).
 A typical journey: user clicks “sign in,” B2C shows a login screen, authenticates, then issues a token back to your app.
+
+
+
+---------------------#--------------------#---------------------#----------------------#---------------------------------#---------------
+
+1. Azure Active Directory B2C offers two methods to define how users interact with your applications: through predefined user flows or through fully configurable custom policies.
+2. User Flows configuration is GUI-based and they are designed for the most common authentication scenarios. Custom Policies are configured via XML files and are much more complex, but can support a wider range of scenarios.
+
+XML:
+-----------------------
+ContentDefinitions → describe which page and UI contract to display (sign-in, sign-up, password reset, error, etc.).
+ClaimsProviders → bundle one or more technical profiles that do the work (read/write directory, validate credentials, call REST APIs, issue tokens).
+UserJourneys → orchestrate a sequence of steps that the user goes through (collect input, validate, read/write, issue token).
