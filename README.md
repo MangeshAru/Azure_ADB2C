@@ -56,3 +56,32 @@ XML:
 ContentDefinitions → describe which page and UI contract to display (sign-in, sign-up, password reset, error, etc.).
 ClaimsProviders → bundle one or more technical profiles that do the work (read/write directory, validate credentials, call REST APIs, issue tokens).
 UserJourneys → orchestrate a sequence of steps that the user goes through (collect input, validate, read/write, issue token).
+
+
+
+**ClaimsSchema**
+Purpose: Defines all the claims (pieces of data) that can exist in your policy. Think of it as the “variables” your policy can use.
+Key elements:
+
+ClaimType Id: Unique identifier for the claim (e.g., email, objectId, displayName).
+DataType: Type of data (string, boolean, int, dateTime, stringCollection).
+UserInputType: How it appears on the UI (TextBox, Password, RadioButton).
+Restriction: Optional regex or validation rules.
+
+Why important?
+Every claim you collect, validate, or return in tokens must be declared here.
+ClaimsSchema ensures consistency across UI, validation, and token issuance.
+
+**ClaimsTransformations**
+Purpose: Apply logic or operations on claims—like validation, formatting, or creating new claims from existing ones.
+Common transformation methods:
+
+AssertBooleanClaimIsEqualToValue: Validate a boolean claim.
+FormatStringClaim: Format a string (e.g., append domain to username).
+AddItemToStringCollection: Add an item to a collection claim.
+AssertDateTimeIsGreaterThan: Compare two date/time claims (used for refresh token revocation).
+
+Why important?
+They enforce business rules (e.g., account must be enabled).
+They prepare claims for token issuance or directory write.
+They enable advanced logic without custom code.
